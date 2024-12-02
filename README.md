@@ -17,38 +17,37 @@ docker build -t aafire .
 ```
 Здесь используется опция **-t** для указания имени образа (aafire), а **.** на конце команды означает, что Docker должен искать файлы для сборки в текущей директории.
 
-4. Далее запускаю контейнер на основе созданного образа и подключаюсь к нему напрямую. При создании контейнера передаю ему запуск приложения “aafire”, которое находится в папке /usr/bin/aafire
+4. В первом терминале я создала и запустила первый контейнер
 ```bash
-docker run -it aafire /usr/bin/aafire
+docker run -it --name container_1 --network myNetwork aafire:latest
 ```
-где **-it** флажок, который обозначает, что приложение будет работать бесконечно
+![photo_5361786582362876132_y (1)](https://github.com/user-attachments/assets/99e04ba2-858c-4e70-a5dc-197848a57aa8)
 
-**Получаем:**
-![photo_5361786582362876132_y](https://github.com/user-attachments/assets/e06dee24-56b2-4598-bcac-790a7b938c34)
-
-5. В первом терминале я создала и запустила первый контейнер
-```bash
-docker run -it --name container_first --network myNetwork aafire:latest
-```
 6. Затем проделала все то же самое во втором окне терминале для второго контейнера
  ```bash
-docker run -it --name container_second --network myNetwork aafire:latest
+docker run -it --name container_2 --network myNetwork aafire:latest
 ```
-![2-fires](https://github.com/user-attachments/assets/69a33c41-cdba-46da-9847-b5c9c062d5ac)
 7. Итого я запустила два контейнера с aafire и оставила их в работающем состоянии.
 Открыла ещё одно окно терминала и создала сеть при помощи команды 
  ```bash
 docker network create myNetwork 
  ```
-8. С помощью команды docker ps я увидела названия контейнеров
-![names (1) (2)](https://github.com/user-attachments/assets/2811dcfd-d36f-4471-b4df-3b6093bee955)
+8. В третьем терминале я протестировала соединение между контейнерами утилитой ping
+![Снимок экрана от 2024-12-02 21-58-50](https://github.com/user-attachments/assets/fd990fb1-e577-4f92-bd8b-5229a506511d)
 
-
-9. Я подключила контейнеры к своей сети с помощью команд docker network connect myNetwork .... и docker network connect myNetwork .....
-
-10. Я протестировала соединение между контейнерами утилитой ping
-
-![ping-ping](https://github.com/user-attachments/assets/a3c7d7f1-48a7-4294-a7ae-a8c1ffa66074)
-
-**ИТого:**
+![Снимок экрана от 2024-12-02 21-59-10](https://github.com/user-attachments/assets/d8f1dc3a-5e85-4ea1-80b4-bf2a96974307)
+**Итого:**
 Все пингуется, следовательно, контейнеры подключены между собой
+
+9. Также я проверила запущенные контейнеры с помощью команды
+ ```bash
+ docker ps
+ ```
+![Снимок экрана от 2024-12-02 22-02-11](https://github.com/user-attachments/assets/679ab7ef-2271-4936-ab5a-68878f18144b)
+10. Также при помощи следующей команды я увидела настройки созданной мною сети.
+ ```bash
+docker network inspect myNetwork
+ ```
+![Снимок экрана от 2024-12-02 22-03-01](https://github.com/user-attachments/assets/863cc171-ca55-41ee-8248-d3284d796f90)
+![Снимок экрана от 2024-12-02 22-02-56](https://github.com/user-attachments/assets/026008a1-033e-4943-9251-1ef1f1ada0e6)
+
